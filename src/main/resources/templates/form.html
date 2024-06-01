@@ -6,20 +6,30 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	
 </head>
-<body>
-	<h1 align=center>Sign up here</h1>
+<body class="bg-success p-2 text-dark bg-opacity-10">
+	<h1 class=text-center row mt-2>Sign up here</h1>
 	
 	<div class="container">
 		<div class="row mt-5" >
 			<div class="col-md-6 offset-md-3">
 			
 			
-			<form>
+			<form novalidate="novalidate" th:action ="@{/success}" class="bg-white p-4" method="post" th:object=${loginData}>
 			  <div class="mb-3">
 			  
 			    <label for="username" class="form-label">UserName</label>
 			    
-			    <input type=text name="userName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+			    <input type=text 
+			    name="userName" 
+			    class="form-control" 
+			    th:value=${loginData.userName}
+			    th:classappend="${#fields.hasErrors('userName')}?'is-invalid':''"
+			    
+			    
+			    id="exampleInputEmail1" 
+			    aria-describedby="emailHelp">
+			    
+			    <div  th:each=" e : ${#fields.errors('userName')}" th:text="${e}" id="usernameFields" class="invalid-feedback"></div>
 			    
 			   
 			  </div>
@@ -28,17 +38,30 @@
 			  <div class="mb-3">
 			    <label for="email" class="form-label">Email</label>
 			    
-			    <input type="email" name= "email" class="form-control" id="exampleInputPassword1">
+			    <input type="email"
+			     name= "email" 
+			     class="form-control" 
+			     th:value=${loginData.email}
+			     th:classappend="${#fields.hasErrors('email')}?'is-invalid':''"
+			     id="exampleInputPassword1">
+			     
+			     <div  th:each=" e : ${#fields.errors('email')}" th:text="${e}" id="emailFields" class="invalid-feedback"></div>
 			  </div>
 			  
 			  
 			  <div class="mb-3 form-check">
-			    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+			    <input name="agreed" th:classappend="${#fields.hasErrors('agreed')}?'is-invalid':''" type="checkbox" class="form-check-input" id="exampleCheck1">
 			    
 			    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+			    
+			    <div  th:each=" e : ${#fields.errors('agreed')}" th:text="${e}" id="agreedFields" class="invalid-feedback"></div>
+			
 			  </div>
 			  
-			  <button type="submit" class="btn btn-primary">Submit</button>
+			  <div class="text-center">
+				  <button type="submit" class="btn btn-primary">Submit</button>
+			  </div>
+			  
 			</form>
 	
 			
